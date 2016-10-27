@@ -23,6 +23,8 @@ class User_model extends CI_Model {
     }
 
     public function register_user() {
+        
+        if($this->session->sess_destroy()){
         $options = ['cost' => 12];
 
         $encrypted_password = password_hash($this->input->post('password'), PASSWORD_BCRYPT, $options);
@@ -33,8 +35,11 @@ class User_model extends CI_Model {
         $user_register = $this->db->insert('users', $data);
 
         return $user_register;
+    
+    }else{
+        redirect ('home');
     }
-
+    }
 //insert video to database
     public function upload_video($userId) {
         $options = ['cost' => 12];

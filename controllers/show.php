@@ -157,6 +157,7 @@ class Show extends CI_Controller {
            $usersid = $this->session->userdata('usersid');
            $usersvideoid = $this->input->post('usersvideoid');
       
+           
         $this->form_validation->set_rules('comment', 'Comment', 'trim|required');
         
 
@@ -178,8 +179,6 @@ class Show extends CI_Controller {
 
             if ($this->session->userdata('usersid')) {
                 $comment_v = $this->show_model->comment_v($this->session->userdata('usersid'));
-
-
 
                 if ($comment_v) {
                     
