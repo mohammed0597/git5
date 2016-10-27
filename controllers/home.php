@@ -16,6 +16,7 @@ class Home extends CI_Controller {
 
         $data['usersvideo'] = $this->show_model->show_video();
         $data['single_video'] = $this->show_model->show_v_id2($usersid);
+       
         $this->load->view('users1_view', $data);
     }
 

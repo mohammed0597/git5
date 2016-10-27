@@ -83,6 +83,8 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li><a href="user/login">login</a></li>
+     
+   
                             <li><a href="user/register">sign up</a></li>
                             <li><a href="video/upload">upload videos</a></li>
                             <li><a href="user/index"> videos</a></li>
@@ -119,25 +121,3 @@
 
     </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

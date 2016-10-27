@@ -2,8 +2,10 @@
 
 class Video extends CI_Controller {
 
+        
+    
     public function upload() {
-
+ if ($this->session->userdata('usersid')) {
         $this->form_validation->set_rules('video_name', 'Video_name', 'trim|required');
         $this->form_validation->set_rules('video', 'Video', 'trim|required');
 
@@ -37,8 +39,11 @@ class Video extends CI_Controller {
                 redirect('home');
             }
         }
-    }
-
+   
+ }else{
+     redirect('home');
+ }   
+ }
 }
 
 ?>

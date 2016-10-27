@@ -47,6 +47,9 @@ class User_model extends CI_Model {
         $video_upload = $this->db->insert('usersvideo', $data);
 
         return $video_upload;
-    }
+
+        }
+        
 
 }
+
