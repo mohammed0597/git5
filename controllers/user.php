@@ -13,7 +13,11 @@ class User extends CI_Controller {
         $this->load->view('users_view', $data);
     }
 
+// function login
+
     public function login() {
+
+    // set_rules : to add validation rule for form input 
         $this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[3]|max_length[15]');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|min_length[7]|max_length[20]');
 
@@ -34,11 +38,13 @@ class User extends CI_Controller {
                     'username' => $username,
                     'logged_in' => true
                 );
+                //set_userdata:to get data from session
                 $this->session->set_userdata('usersid', $id);
 
 
 
                 $this->session->set_userdata($data);
+                //set flashdata:: save data in session for next request
 
                 $this->session->set_flashdata('login_succed', 'you are now logged in');
                 redirect('home ');

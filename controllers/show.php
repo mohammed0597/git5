@@ -7,22 +7,17 @@ class Show extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->helper('url');        /*         * LOADING HELPER TO AVOID PHP ERROR *** */
-        $this->load->model('show_model'); /* Welcome_model as welcome */
+        $this->load->model('show_model'); 
     }
 
-    public function contents() {
-
-        $this->data['show_video'] = $this->welcome->show_video();
-        $this->load->view('video_view', $this->data, FALSE);
-        
-    }
+// show video by id 
 
     function show_v_id() {
         $id = $this->uri->segment(3);
         $data['usersvideo'] = $this->show_model->show_video();
         $data['single_video'] = $this->show_model->show_v_id($id);
        
-
+//count views by update views=views+1 
 
         $this->db->query('update usersvideo set views=views+1 where id="' . $id . '"');
 
@@ -33,6 +28,7 @@ class Show extends CI_Controller {
         $query = $this->db->get();
         $result = $query->result();
         
+      
          $usersid = $this->uri->segment(3);
         $data['usersvideocomment'] = $this->show_model->show_comment();
         $data['s_video'] = $this->show_model->show_v_id3($usersid);
@@ -50,55 +46,47 @@ class Show extends CI_Controller {
         $this->show_model->show_v_id1($id, $data);
         $this->show_v_id();
     }
-
+//function show video in users page by usersid  
     function show_v_id2() {
         $usersid = $this->uri->segment(3);
         $data['usersvideo'] = $this->show_model->show_video();
         $data['single_video'] = $this->show_model->show_v_id($usersid);
       
         
-        $data['usersvideocomment'] = $this->show_model->show_comment();
-        $data['s_video'] = $this->show_model->show_v_id3($usersvideoid);
-        $this->load->view('users1_view', $data);
+        
     }
     
-
-
-    
+    //delete video from database by user
     function delete_video($id) {
 
         $this->show_model->delete_video($id);
+        // after delete video open new page with message 'you have delete your video' and can go back to home page 
         echo'you have delete your video .<br><a href= http://[::1]/ci4/index.php/home>go back</a>';
     }
     
-     function delete_comment($id) {
-
-        $this->show_model->delete_comment($id);
-        echo 'you have delete the  .<br><a href= http://[::1]/ci4/index.php/show/show_v_id1/id>go back</a>';
-    }
-
+  // function for save likes 
     public function savelikes() {
 
         if ($this->session->userdata('usersid')) {
             $usersid = $this->session->userdata('usersid');
             $usersvideoid = $this->input->post('usersvideoid');
 
-
+//select likes from database by usersvideoid
             $fetchlikes = $this->db->query('select likes from usersvideo where id="' . $usersvideoid . '"');
             $result = $fetchlikes->result();
-
+//select where usersvideoid and usersid
             $checklikes = $this->db->query('select * from usersvideolikes 
                                     where usersvideoid="' . $usersvideoid . '" 
                                     and usersid = "' . $usersid . '"');
             $resultchecklikes = $checklikes->num_rows();
-
+//update likes=1 and like+1
             if ($resultchecklikes == '0') {
                 if ($result[0]->likes == "" || $result[0]->likes == "NULL") {
                     $this->db->query('update usersvideo set likes=1 where id="' . $usersvideoid . '"');
                 } else {
                     $this->db->query('update usersvideo set likes=likes+1 where id="' . $usersvideoid . '"');
                 }
-
+//update likes=1 and like-1
                 $data = array('usersvideoid' => $usersvideoid, 'usersid' => $usersid);
                 $this->db->insert('usersvideolikes', $data);
             } else {
@@ -119,28 +107,28 @@ class Show extends CI_Controller {
             $resultchecklikes = $checklikes->num_rows();
         }
     }
-
+  // function for save unlikes 
     public function saveunlikes() {
         if ($this->session->userdata('usersid')) {
             $usersid = $this->session->userdata('usersid');
             $usersvideoid = $this->input->post('usersvideoid');
 
-
+//select unlikes from database by usersvideoid
             $fetchunlikes = $this->db->query('select unlikes from usersvideo where id="' . $usersvideoid . '"');
             $result = $fetchunlikes->result();
-
+//select where usersvideoid and usersid
             $checkunlikes = $this->db->query('select * from usersvideounlikes 
                                     where usersvideoid="' . $usersvideoid . '" 
                                     and usersid = "' . $usersid . '"');
             $resultcheckunlikes = $checkunlikes->num_rows();
-
+//update unlikes=1 and unlike+1
             if ($resultcheckunlikes == '0') {
                 if ($result[0]->unlikes == "" || $result[0]->unlikes == "NULL") {
                     $this->db->query('update usersvideo set unlikes=1 where id="' . $usersvideoid . '"');
                 } else {
                     $this->db->query('update usersvideo set unlikes=unlikes+1 where id="' . $usersvideoid . '"');
                 }
-
+//update unlikes=1 and unlike-1
                 $data = array('usersvideoid' => $usersvideoid, 'usersid' => $usersid);
                 $this->db->insert('usersvideounlikes', $data);
             } else {
@@ -161,16 +149,13 @@ class Show extends CI_Controller {
         }
     }
 
-   
+   //select comment from database where usersvideoid and usersid 
+    //cant make comment if you are not  login 
+    //if you comment open new page with message 'thanks for comment' 
     public function comment_v() {
         
            $usersid = $this->session->userdata('usersid');
            $usersvideoid = $this->input->post('usersvideoid');
-         
-           
-          
-         
-         
       
         $this->form_validation->set_rules('comment', 'Comment', 'trim|required');
         
@@ -198,14 +183,12 @@ class Show extends CI_Controller {
 
                 if ($comment_v) {
                     
-                    redirect(show/show_v_id1/$usersvideoid);
-                } else {
-                    redirect('comment/comment_v');
-                }
-            } else {
-                redirect('show/show_v_id1/$usersvideoid');
-            }
+                   echo 'thanks for comment ';
+                   
+                } 
         }
+        
+                }
     }
 
 }

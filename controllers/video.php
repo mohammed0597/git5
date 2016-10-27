@@ -3,7 +3,7 @@
 class Video extends CI_Controller {
 
         
-    
+    //function upload video
     public function upload() {
  if ($this->session->userdata('usersid')) {
         $this->form_validation->set_rules('video_name', 'Video_name', 'trim|required');

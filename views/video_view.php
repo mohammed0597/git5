@@ -245,7 +245,7 @@
                                     <div class="panel-body">
 
                                         <?php echo $usersvideocomment->comment; ?></div>
-           <a href='http://[::1]/ci4/index.php/show/delete_comment/<?php echo $usersvideocomment->id ?>'>delete</a>
+           
 
                                     <div class="col-sm-1">
                                         <div class="thumbnail">

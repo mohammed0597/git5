@@ -1,7 +1,7 @@
 <?php
 
 class User_model extends CI_Model {
-
+//get users from usersvideo table 
     public function get_users() {
         $query = $this->db->get('usersvideo');
         return $query->result();
@@ -35,6 +35,7 @@ class User_model extends CI_Model {
         return $user_register;
     }
 
+//insert video to database
     public function upload_video($userId) {
         $options = ['cost' => 12];
 
@@ -47,9 +48,6 @@ class User_model extends CI_Model {
         $video_upload = $this->db->insert('usersvideo', $data);
 
         return $video_upload;
-
-        }
-        
+    }
 
 }
-

@@ -12,8 +12,6 @@ class Home extends CI_Controller {
         $data['content'] = 'login_view.php';
         $this->load->view('home_view', $data);
         $usersid = $this->session->userdata('usersid');
-
-
         $data['usersvideo'] = $this->show_model->show_video();
         $data['single_video'] = $this->show_model->show_v_id2($usersid);
        

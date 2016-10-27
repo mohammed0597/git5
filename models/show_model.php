@@ -35,6 +35,7 @@ class Show_model extends CI_Model {
         $result = $query->result();
         return $result;
     }
+
     function show_v_id3($data) {
         $this->db->select('*');
         $this->db->from('usersvideocomment');
@@ -43,16 +44,12 @@ class Show_model extends CI_Model {
         $result = $query->result();
         return $result;
     }
+
     function delete_video($id) {
         $this->db->where('id', $id);
         $this->db->delete('usersvideo');
     }
 
-     function delete_comment($id) {
-        $this->db->where('id', $id);
-        $this->db->delete('usersvideocomment');
-    }
-    
     public function comment_v($usersid) {
         $options = ['cost' => 12];
         $usersid = $this->session->userdata('usersid');
@@ -70,14 +67,14 @@ class Show_model extends CI_Model {
         return $comment_v;
     }
 
-    
-      function show_comment() {
+    function show_comment() {
 
 
 
         $query = $this->db->get('usersvideo');
         return $query->result_array();
     }
+
 }
 
 ?>

@@ -72,7 +72,7 @@
 
                         </tr>
                         <div>
-                            <tr> <label>Name :</label>
+                            <tr> <label></label>
                             <?php echo $usersvideo->video_name; ?>
 
                             </tr>
